@@ -11,4 +11,8 @@ class Books extends Model
 
     protected $table = 'books';
 
+    public function authors() {
+        return $this->hasManyThrough(Authors::class, AuthorHasBooks::class);
+    }
+
 }

@@ -10,4 +10,8 @@ class Authors extends Model
     use HasFactory;
 
     protected $table = 'authors';
+
+    public function books() {
+        return $this->hasManyThrough(Books::class, AuthorHasBooks::class);
+    }
 }
