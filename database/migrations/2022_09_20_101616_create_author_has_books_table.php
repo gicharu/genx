@@ -14,8 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('author_has_books', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->foreignId('author_id');
+            $table->foreignId('book_id');
+
         });
     }
 
