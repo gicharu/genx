@@ -12,7 +12,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', '\App\Http\Controllers\AuthorsController@index');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::resources([
+    'authors' => \App\Http\Controllers\AuthorsController::class,
+    'books' => \App\Http\Controllers\BooksController::class
+]);
+Route::get('authors/{author}/destroy', '\App\Http\Controllers\AuthorsController@destroy');
