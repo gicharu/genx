@@ -11,6 +11,9 @@ class Authors extends Model
 
     protected $table = 'authors';
 
+    protected $fillable = ['id', 'first_name', 'surname'];
+
+
     public function books() {
         return $this->hasManyThrough(Books::class, AuthorHasBooks::class);
     }

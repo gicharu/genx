@@ -10,9 +10,10 @@ class Books extends Model
     use HasFactory;
 
     protected $table = 'books';
+    public string $book_author;
 
     public function authors() {
-        return $this->hasManyThrough(Authors::class, AuthorHasBooks::class);
+        return $this->belongsToMany(Authors::class, 'author_has_books', 'book_id', 'author_id');
     }
 
 }

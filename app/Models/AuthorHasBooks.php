@@ -13,6 +13,14 @@ class AuthorHasBooks extends Pivot
 
     public $timestamps = false;
 
+    public function books() {
+        return $this->belongsTo(Books::class);
+    }
+
+    public function authors() {
+        return $this->belongsTo(Authors::class);
+    }
+
 
 
 
