@@ -35,6 +35,7 @@
 
 ### API
 - Using a REST client, navigate to [webroot]/api/authors
+- Set the **Accept** header to `application/json`
 - Below is a list of some endpoints, to see all endpoints run `php artisan route:list --path=api`
 
 | Method    | Endpoint                                                     | Description                | Params |
