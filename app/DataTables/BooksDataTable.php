@@ -65,7 +65,7 @@ class BooksDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('frtip')
-                    ->orderBy(1);
+                    ->orderBy(0, 'asc');
 
 
     }

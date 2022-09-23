@@ -55,7 +55,7 @@ class AuthorsDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('frtip')
-                    ->orderBy(1);
+                    ->orderBy(0, 'asc');
 //                    ->buttons(
 //                        Button::make('create'),
 //                        Button::make('export'),
