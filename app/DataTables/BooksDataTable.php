@@ -23,9 +23,13 @@ class BooksDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->editColumn('booksAuthor ', function($row) {
+            ->addColumn('booksAuthor', function($row) {
                 $bookAuthor = '';
-                foreach ($row->authors as $author) {
+                $availableAuthors = $row->authors;
+                if(!isset($availableAuthors[0])) {
+                    return '<i>Unkown</i>';
+                }
+                foreach ($availableAuthors as $author) {
                     $bookAuthor .= $author->first_name . ' ' . $author->surname . ', ';
                 }
                 return trim($bookAuthor, " ,\t\n");
@@ -35,7 +39,7 @@ class BooksDataTable extends DataTable
                         <a title="Edit" class="btn btn-primary" href="'. url('books/' . $row->id . '/edit') . '"><i class="fas fa-edit"></i></a>' .
                     '<a title="Delete" class="btn btn-danger" href="'. url('books/' . $row->id . '/destroy') . '"><i class="fas fa-trash"></i></a>
                         </div>'; })
-            ->setRowId('id');
+            ->rawColumns(['action', 'booksAuthor']);
     }
 
     /**
@@ -46,7 +50,7 @@ class BooksDataTable extends DataTable
      */
     public function query(Books $model): QueryBuilder
     {
-        return $model->newQuery()->with(['authors']);
+        return $model->newQuery();
     }
 
     /**
