@@ -23,7 +23,7 @@ class BooksDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('book_author ', function($row) {
+            ->editColumn('booksAuthor ', function($row) {
                 $bookAuthor = '';
                 foreach ($row->authors as $author) {
                     $bookAuthor .= $author->first_name . ' ' . $author->surname . ', ';
@@ -74,7 +74,7 @@ class BooksDataTable extends DataTable
     protected function getColumns(): array
     {
         return [
-            Column::make('book_author', 'Author(s)'),
+            Column::computed('booksAuthor', 'Author(s)'),
             Column::make('title'),
             Column::computed('action')
                 ->exportable(false)

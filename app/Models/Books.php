@@ -10,6 +10,8 @@ class Books extends Model
     use HasFactory;
 
     protected $table = 'books';
+    protected $fillable = ['id', 'title', 'book_author'];
+
     public string $book_author;
 
     public function authors() {

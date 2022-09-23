@@ -1,5 +1,3 @@
-
-
 @extends('adminlte::page')
 
 @section('title', 'Authors')
@@ -24,13 +22,20 @@
                 "allowClear" => true,
             ];
         @endphp
-        <x-adminlte-select2 name="authors" igroup-size="lg" label="Author(s)" multiple>
-            @foreach($authorsList as $author)
-            <option>{{$author->first_name . ' ' . $author->surname}}</option>
-            @endforeach
+        <x-adminlte-select2 name="authors[]" igroup-size="lg" label="Author(s)" multiple>
+            @php
+                foreach($authorsList as $author) {
+                    $selected = '';
+                    if(isset($selectedAuthors) && isset($selectedAuthors[$author->id])) {
+                    $selected = 'selected';
+                    }
+
+                echo '<option value="' . $author->id . '" ' . $selected . '>' . $author->first_name . ' ' . $author->surname , '</option>';
+                    }
+            @endphp
         </x-adminlte-select2>
     </div>
-        {{ Form::hidden('id') }}
+    {{ Form::hidden('id') }}
     <x-adminlte-button class="btn-flat" type="submit" label="Save" theme="success" icon="fas fa-lg fa-save"/>
 
     {{ Form::close() }}

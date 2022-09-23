@@ -19,3 +19,4 @@ Route::resources([
     'books' => \App\Http\Controllers\BooksController::class
 ]);
 Route::get('authors/{author}/destroy', '\App\Http\Controllers\AuthorsController@destroy');
+Route::get('books/{book}/destroy', '\App\Http\Controllers\BooksController@destroy');

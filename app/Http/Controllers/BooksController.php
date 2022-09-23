@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataTables\BooksDataTable;
 use App\Http\Requests\BooksRequest;
+use App\Models\AuthorHasBooks;
 use App\Models\Authors;
 use App\Models\Books;
 use Illuminate\Http\Request;
@@ -31,7 +32,8 @@ class BooksController extends Controller
     {
         $book = new Books();
         $operation = 'Add';
-        return View::make('books.form')->with(compact('operation','book'));
+        $authorsList = $this->getAuthors();
+        return View::make('books.form')->with(compact('operation','book', 'authorsList'));
 
     }
 
@@ -46,6 +48,7 @@ class BooksController extends Controller
      */
     public function store(BooksRequest $request)
     {
+        //dd($request);
         $id = $request->id ?? null;
         if($id) {
             $book = Books::find($id);
@@ -55,6 +58,11 @@ class BooksController extends Controller
         $book->title = $request->title;
 
         $book->save();
+        $pivotData = [];
+        foreach ($request->authors as $author) {
+            $pivotData[] = [ 'book_id' => $book->id,'author_id' => $author];
+        }
+        $book->authors()->sync($pivotData);
 
         return redirect()->to('books');
 
@@ -81,7 +89,11 @@ class BooksController extends Controller
         $book = Books::find($id);
         $operation = 'Edit';
         $authorsList = $this->getAuthors();
-        return View::make('books.form')->with(compact('operation','book', 'authorsList'));
+        $selectedAuthors = [];
+        foreach($book->authors as $author) {
+            $selectedAuthors[$author->id] = $author->id;
+        }
+        return View::make('books.form')->with(compact('operation','book', 'authorsList', 'selectedAuthors'));
     }
 
     /**
@@ -104,8 +116,10 @@ class BooksController extends Controller
      */
     public function destroy($id)
     {
-        Books::destroy($id);
 
+        $book = Books::find($id);
+        $book->authors()->sync([]);
+        $book->delete();
         return redirect()->back();
     }
 }
