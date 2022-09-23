@@ -17,7 +17,7 @@ class BooksFactory extends Factory
     public function definition()
     {
         return [
-            'title' => fake()->realTextBetween(20, 50)
+            'title' => fake()->text( 50)
         ];
     }
 }
