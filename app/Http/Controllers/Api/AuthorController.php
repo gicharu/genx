@@ -16,7 +16,7 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        $authors = Authors::all();
+        $authors = Authors::with('books')->get();
         return response()->json(['data' => $authors]);
     }
 

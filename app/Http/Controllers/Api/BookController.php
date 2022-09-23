@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BooksRequest;
 use App\Models\Books;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -14,9 +15,20 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        $books = Books::all();
+        $booksQuery = Books::with('authors');
+        if($request->has('bookName')) {
+            $booksQuery->where('title', 'LIKE', '%' . $request->bookName . '%');
+        }
+        if($request->has('authorName')) {
+            $booksQuery->whereHas('authors', function (Builder $query) use ($request) {
+                $query->where('first_name', 'LIKE', '%' . $request->authorName . '%')
+                    ->orWhere('surname', 'LIKE', '%' . $request->authorName . '%');
+            });
+
+        }
+        $books = $booksQuery->get();
         return response()->json(['data' => $books]);
     }
 
