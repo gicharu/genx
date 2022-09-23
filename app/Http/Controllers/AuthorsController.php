@@ -88,8 +88,9 @@ class AuthorsController extends Controller
      */
     public function destroy($id)
     {
-        Authors::destroy($id);
-
+        $author = Authors::find($id);
+        $author->books()->sync([]);
+        $author->delete();
         return redirect()->back();
     }
 }

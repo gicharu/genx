@@ -24,8 +24,8 @@ class AuthorsRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name' => 'required|string|max:15',
-            'surname' => 'required|string|max:15'
+            'first_name' => 'required|alpha|max:15',
+            'surname' => 'required|alpha|max:15'
         ];
     }
 }

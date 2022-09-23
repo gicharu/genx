@@ -15,6 +15,6 @@ class Authors extends Model
 
 
     public function books() {
-        return $this->hasManyThrough(Books::class, AuthorHasBooks::class);
+        return $this->belongsToMany(Books::class, 'author_has_books', 'author_id', 'book_id');
     }
 }
