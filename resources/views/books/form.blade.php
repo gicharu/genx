@@ -19,10 +19,10 @@
         @php
             $config = [
                 "placeholder" => "Select one or more authors...",
-                "allowClear" => true,
+                "allowClear" => true
             ];
         @endphp
-        <x-adminlte-select2 name="authors[]" igroup-size="lg" label="Author(s)" multiple>
+        <x-adminlte-select2 id="authors" name="authors[]" fgroup-class="col-md-6" igroup-size="lg" label="Author(s)" multiple>
             @php
                 foreach($authorsList as $author) {
                     $selected = '';
